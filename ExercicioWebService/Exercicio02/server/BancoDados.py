@@ -1,12 +1,13 @@
 from enum import Enum
 
+
 class Plan(Enum):
     STANDARD = 0
     MEDDIUM = 1
     PREMIUM = 2
 
 class MockBancoDados:
-    users = [{'nome':'leo', 'plan': 1}, {'nome':'camila', 'plan':2}]
+    users = [{'nickname':'leo.brito', 'password' : '32154', 'plan': 1}, {'nickname':'camila.silva', "password":"124587" ,'plan':2}]
 
     def VerifyUser(self, nickname:str) -> bool:
         nick = nickname.split('.')
@@ -14,46 +15,25 @@ class MockBancoDados:
             return False
         return True
     
-    def AddUser(self, nickname, plan:Plan):
-        isValid = self.VerifyUser(nickname)
-        retorno = self.FindUser(nickname)
-        if(retorno != None or not(isValid)):
-            return {
-                'status':200, 
-                'message':'Usuário inválido', 
-                'data':[]
-            }
-
-        self.users.append({'nome':nickname, 'plano':plan.value})
-
-        return {
-            'status':200, 
-            'message': 'Usuário adicionado com sucesso!', 
-            'data':[{
-                'nickName': nickname
-            }]
-        }
+    def AddUser(self, user):
+        self.users.append({'nickname':user.nickname, 'password' : user.password, 'plan':user.plan.value})
     
-    def RemoveUser(self, nickname):
-        res = next((user for user in self.users if user['nome'] == nickname), None)
-        if(res == None):
-            return {
-                'status':200,
-                'message':'Usuário não encontrado',
-                'data':[]
-            }
-        self.users.remove(res)
-        return {
-                'status':200,
-                'message':'Usuário removido com sucesso',
-                'data':[]
-            }
+    def RemoveUser(self, user):    
 
-    def FindUser(self, nickname:str) -> dict | None:
+        res = next((_user for _user in self.users if _user['nickname'] == user.nickname and _user['password'] == user.password), None)
+
+        if(res == None):
+            return False
+        
+        self.users.remove(res)
+        
+        return True
+
+    def FindUser(self, nickname:str) -> dict or None:
         if(nickname == None):
             return None
         
-        res = next((user for user in self.users if user['nome'] == nickname), None)
+        res = next((user for user in self.users if user['nickname'] == nickname), None)
 
         return res
 
