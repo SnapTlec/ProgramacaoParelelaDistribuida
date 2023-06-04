@@ -1,13 +1,16 @@
 import json 
 import requests
 
-name="USA"
+name="Brasil"
+nickname = "leo.brito"
+password = "32154"
 
-url = f"https://restcountries.com/v3.1/name/{name}"
+url = f"http://localhost:5000/country/?country={name}"
 
-
-res = requests.get(url=url)
-
-#json_object = json.dumps(res.content.decode('utf-8'), indent = 4) 
+request = {
+    "nickname" : nickname,
+    "password" : password
+}
+res = requests.post(url=url, json=request)
 
 print(res.json())

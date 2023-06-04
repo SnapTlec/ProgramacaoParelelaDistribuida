@@ -38,6 +38,7 @@ class MockBancoDados:
         return res
 
     def CanDoThat(self, user, idFuncao) -> bool:
+        print(user["plan"])
         ID_FUNCAO = idFuncao
         if (user == None):
             return False

@@ -3,6 +3,7 @@ from source.BancoDados import *
 import source.Users as Users
 from services.Clock import Hour
 from services.Advice import Advice
+from services.Country import Country
 
 app = Flask(__name__)
 
@@ -105,7 +106,6 @@ def returnHour():
         "data" : []
     }
 
-
 @app.route("/advice/", methods=["POST"])
 def get_advice():
     ID_FUNCAO_ADVICE = 2445
@@ -130,17 +130,27 @@ def get_advice():
         "data" : []
     }
 
-@app.route("/country/<IdentificadorPais>", methods=["POST"])
-def get_info_country(IdentificadorPais):
+@app.route("/country/", methods=["POST"])
+def get_info_country():
     ID_FUNCAO_COUNTRY = 3445
+    jsonRequest = request.get_json()
+    nickname = jsonRequest["nickname"]
+    password = jsonRequest["password"]
+
+    country = request.args.get("country")
+
+    banco = MockBancoDados()
+    res = banco.validateUser(nickname, password)
+    if(banco.CanDoThat(res["data"], ID_FUNCAO_COUNTRY)):
+        return {
+            "status" : 200,
+            "message" : "",
+            "data" : Country.get_info_country(country)
+        }
     return {
         "status" : 200,
-        "message" : "",
-        "data" : [] 
+        "message" : "Usuário não possui permissão para utilizar essa função. Faça um upgrade de plano.",
+        "data" : []
     }
-
-
-
-
 
 app.run()
