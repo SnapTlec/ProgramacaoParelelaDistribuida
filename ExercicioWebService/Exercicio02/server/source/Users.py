@@ -1,10 +1,10 @@
-from BancoDados import Plan
+from source.BancoDados import Plan
 
 class User:
     def __init__(self, name:str, password:str, plan:int):
         self.nickname = name
         self.password = password
-        self.plan = Plan.STANDARD#self.setPlan(plan)
+        self.plan = self.setPlan(plan)
 
 
     def setPlan(self, plan:int) -> Plan:
