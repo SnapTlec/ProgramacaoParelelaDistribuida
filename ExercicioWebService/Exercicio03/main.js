@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var appRoutes = require('./routes/app');
 
 var app = express();
+const port = 3000
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -30,14 +31,6 @@ app.use(function (req, res, next) {
 
 app.use('/', appRoutes);
 
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
-    return {
-        status : 404,
-        message : "Página não encontrada",
-        data : []
-    }
-});
-
-
-module.exports = app; 
+app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`)
+  })

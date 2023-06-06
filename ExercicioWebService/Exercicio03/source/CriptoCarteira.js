@@ -1,14 +1,24 @@
-export default class CriptCarteira{
-    constructor(owner, aporte){
-        this.saldo = aporte
-        this.owner = owner
+var crypto = require('node:crypto');
+class CriptCarteira{
+    constructor(){
+        this.ID = crypto.randomBytes(20).toString('hex');
+        this.saldo = 0
+    }
+    atribuir_owner(user){
+        if(!user.nome || !user.password){
+            return false
+        }
+        this.owner = user
+        return true
     }
     depositar(valor) {
-        if(valor > 0){
-            this.saldo += valor
-            return true
+        const VALOR_MINIMO_APORTE = 50.00
+        if(valor < VALOR_MINIMO_APORTE){
+            return false
         }
-        return false
+        this.saldo += valor
+        return true
+
     }
     sacar(valor){
         var saldoAtual = this.saldo
@@ -30,3 +40,5 @@ export default class CriptCarteira{
         return true
     }
 }
+
+module.exports = CriptCarteira
