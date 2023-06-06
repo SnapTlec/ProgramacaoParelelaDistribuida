@@ -5,7 +5,7 @@ class Advice:
     @staticmethod
     def request_api_advice(de:str=None):
         MAX_DEFAULT = 1
-        TERM_DEFAULT = "?term=Jesus%20Cristo"
+        TERM_DEFAULT = "Jesus%20Cristo"
         URL_BASE = "https://pensador-api.vercel.app/"
         
         if(de==None):
