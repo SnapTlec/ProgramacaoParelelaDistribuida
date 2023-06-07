@@ -1,7 +1,7 @@
 {
   "scripts": {
     "start": "node main.js",
-    "client": "node ./client/create_client.js && node ./client/create_wallet.js && node ./client/delete_wallet.js",
+    "client": "node ./client/create_client.js && node ./client/create_login.js && node ./client/create_wallet.js",
     "dev": "nodemon main.js"
   },
   "dependencies": {

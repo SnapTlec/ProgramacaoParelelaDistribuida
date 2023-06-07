@@ -47,7 +47,7 @@ class BancoDados{
         if(!UserName){
             return false
         }
-        const found = this.users.find(element => element.nome == UserName)
+        var found = this.users.find(element => element.nome == UserName)
         return found
     }
     static authUser(user){
@@ -55,6 +55,7 @@ class BancoDados{
             return false
         }
         const found = this.users.find(element => element.nome == user.nome && element.password == user.password)
+        console.log(found)
         if(found){
             return true
         }

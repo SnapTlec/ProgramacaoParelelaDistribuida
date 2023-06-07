@@ -1,12 +1,13 @@
 var { Buffer }  = require ('node:buffer')
 const User = require('./User');
-const Banco = require('./BancoDados')
+const Banco = require('./BancoDados');
+const { json } = require('express');
 
 
 class Token{
     constructor(){
         this.SECRET = "N4_n01t3_ma1s_s0mbr14"
-        this.TIMEOUT_SESSION=300000
+        this.TIMEOUT_SESSION=6000000000
     }
 
     gerarToken(user){
@@ -37,8 +38,7 @@ class Token{
             token_split.push(buff)
         })
         var secret = token_split[0]
-
-        if(secret != ""){
+        if(secret == ""){
             return {
                 tokenValid : false,
                 message : "Token Inválido"
@@ -50,21 +50,23 @@ class Token{
         
         if(tempo_sessao >= this.TIMEOUT_SESSION){
             return {
-                tokenValid : true,
+                tokenValid : false,
                 message : "Sua sessão expirou. Timeout!"
             }
         }
         var auth_string = token_split[2]
         var auth_string_split = auth_string.split(".")
-
-        var nome = auth_string_split[0]
-        var password = auth_string_split[1]
+        
+        var nome = auth_string_split[0] + "." + auth_string_split[1]
+        var password = auth_string_split[2]
 
         const user = new User(nome, password)
+        
         if(Banco.authUser(user)){
             return {
                 tokenValid : true,
-                message: ""
+                message: "",
+                data : user
             }
         }
 

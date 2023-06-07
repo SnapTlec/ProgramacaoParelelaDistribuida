@@ -1,15 +1,9 @@
 var crypto = require('node:crypto');
 class CriptCarteira{
-    constructor(){
+    constructor(owner){
         this.ID = crypto.randomBytes(20).toString('hex');
         this.saldo = 0
-    }
-    atribuir_owner(user){
-        if(!user.nome || !user.password){
-            return false
-        }
-        this.owner = user
-        return true
+        this.owner = owner
     }
     depositar(valor) {
         const VALOR_MINIMO_APORTE = 50.00

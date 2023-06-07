@@ -9,5 +9,5 @@ body = {
 
 axios.post(url, body).then(function (response){
 
-    console.log(response.data)
+    console.log("Retorno criação client: ", response.data)
 })
